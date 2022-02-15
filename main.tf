@@ -6,6 +6,11 @@ terraform {
     }
   }
   required_version = "> 0.14"
+  backend "s3" {
+    bucket = "circle-ci-backend-20220215000510531900000001"
+    key    = "terraform/webapp/terraform.tfstate"
+    region = "us-east-2"
+  }
 }
 
 provider "aws" {
@@ -64,12 +69,6 @@ resource "aws_s3_bucket_object" "app" {
   content      = file("./assets/index.html")
   content_type = "text/html"
 
-}
-
-backend "s3" {
-  bucket = "circle-ci-backend-20220215000510531900000001"
-  key    = "terraform/webapp/terraform.tfstate"
-  region = "us-east-2"
 }
 
 output "Endpoint" {
